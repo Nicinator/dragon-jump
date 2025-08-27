@@ -1,7 +1,8 @@
 class Controls {
-    constructor() {
+    constructor(player) {
         this.isMovingLeft = false;
         this.isMovingRight = false;
+        this.player = player;
 
         window.addEventListener('keydown', (event) => { this.handleKeyEvent(event) });
         window.addEventListener('keyup', (event) => { this.handleKeyEvent(event) });
@@ -19,6 +20,13 @@ class Controls {
                 break;
             case 'KeyD':
                 this.isMovingRight = isKeyDown;
+                break;
+            case 'Space':
+                player.isChargingJump = isKeyDown;
+
+                if(!isKeyDown) {
+                    this.player.jump();
+                }
                 break;
         }
     }

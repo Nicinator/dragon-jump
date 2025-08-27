@@ -1,18 +1,42 @@
 class Island {
-    constructor() {
-        this.position = { x: 0, y: 0 };
-        this.size = { x: 0, y: 0 };
-
-        this.spawn();
+    constructor(isFirstIsland = false) {
+        if(isFirstIsland) {
+            this.position = { x: 40, y: -10 };
+            this.size = { x: 20, y: 20 };
+        } else {
+            this.position = { x: 0, y: 0 };
+            this.size = { x: 0, y: 0 };
+        }
     }
 
-    spawn() {
+    spawn(minY) {
         // Random size between 10 and 20
-        this.size.x = this.size.y = Math.random() * 10 + 10;
+        this.size.x = this.size.y = Math.random() * 5 + 10;
 
         // Randomize position
         this.position.x = Math.random() * (100 - this.size.x);
-        this.position.y = Math.random() * (50 - this.size.y);
+        this.position.y = Math.random() * (40 - this.size.y) + minY;
+    }
+
+    isCollidingWith(object) {
+        if(
+            this.position.x + this.size.x < object.position.x + object.size.x && this.position.x + this.size.x > object.position.x ||
+            this.position.x > object.position.x && this.position.x < object.position.x + object.size.x ||
+            this.position.x >= object.position.x && this.position.x + this.size.x <= object.position.x + object.size.x
+        ) {
+            // Is overlapping in X axis
+
+            if(
+                this.position.y + this.size.y < object.position.y + object.size.y && this.position.y + this.size.y > object.position.y ||
+                this.position.y > object.position.y && this.position.y < object.position.y + object.size.y ||
+                this.position.y >= object.position.y && this.position.y + this.size.y <= object.position.y + object.size.y
+            ) {
+                // Is also overlapping in Y axis
+                return true;
+            }
+        }
+
+        return false;
     }
 
     nextTick(canvas) {

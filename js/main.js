@@ -1,6 +1,8 @@
 // Set global coordinate size
 const ASPECT_RATIO = 16 / 9;
+const HIGHEST_Y = 100 / ASPECT_RATIO;
 var coordinateSize;
+var canvasHeightInPX = 0;
 function handleResize() {
     if(window.innerHeight * ASPECT_RATIO > window.innerWidth) {
         // Portrait
@@ -9,16 +11,19 @@ function handleResize() {
         // Landscape
         coordinateSize = window.innerHeight / 100 * ASPECT_RATIO;
     }
+
+    canvasHeightInPX = Math.floor(coordinateSize * 100 / ASPECT_RATIO);
 }
 window.addEventListener('resize', () => { handleResize() });
 handleResize();
 
 const playground = new Canvas();
 const player = new Character();
-const controls = new Controls();
+const controls = new Controls(player);
 
-// Generate test island
-const island = new Island();
+// Generate world
+const world = new World();
+world.createIslands();
 
 let lastTimestamp = Date.now();
 
@@ -29,11 +34,11 @@ function tick() {
     const deltaTime = currentTimestamp - lastTimestamp;
     lastTimestamp = currentTimestamp;
 
+    // Tick world
+    world.nextTick(playground);
+
     // Tick character
     player.nextTick(playground, controls, deltaTime);
-
-    // Tick island
-    island.nextTick(playground);
 
     // Render image
     playground.clear();
