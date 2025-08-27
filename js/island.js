@@ -20,20 +20,10 @@ class Island {
 
     isCollidingWith(object) {
         if(
-            this.position.x + this.size.x < object.position.x + object.size.x && this.position.x + this.size.x > object.position.x ||
-            this.position.x > object.position.x && this.position.x < object.position.x + object.size.x ||
-            this.position.x >= object.position.x && this.position.x + this.size.x <= object.position.x + object.size.x
+            this.position.x < object.position.x + object.size.x && this.position.x + this.size.x > object.position.x &&
+            this.position.y < object.position.y + object.size.y && this.position.y + this.size.y > object.position.y
         ) {
-            // Is overlapping in X axis
-
-            if(
-                this.position.y + this.size.y < object.position.y + object.size.y && this.position.y + this.size.y > object.position.y ||
-                this.position.y > object.position.y && this.position.y < object.position.y + object.size.y ||
-                this.position.y >= object.position.y && this.position.y + this.size.y <= object.position.y + object.size.y
-            ) {
-                // Is also overlapping in Y axis
-                return true;
-            }
+            return true;
         }
 
         return false;

@@ -62,7 +62,7 @@ class Character {
         }
 
         if(this.jumpCharge === this.maxJumpHeight && this.negativeJumpCharge < this.maxJumpPenalty) {
-            this.negativeJumpCharge += deltaTime / 5 * ((45 - this.negativeJumpCharge) / 40);
+            this.negativeJumpCharge += deltaTime / 5 * ((40 - this.negativeJumpCharge) / 40);
         }
         if(this.negativeJumpCharge > this.maxJumpPenalty) {
             this.negativeJumpCharge = this.maxJumpPenalty;
