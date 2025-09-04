@@ -15,7 +15,7 @@ class Island {
 
         // Randomize position
         this.position.x = Math.random() * (100 - this.size.x);
-        this.position.y = Math.random() * (40 - this.size.y) + minY;
+        this.position.y = Math.random() * (30 - this.size.y) + minY;
     }
 
     isCollidingWith(object) {

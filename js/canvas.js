@@ -15,13 +15,23 @@ class Canvas {
 
     draw() {
         for (const item of this.content) {
+            const drawPosition = { x: item.position.x * coordinateSize, y: canvasHeightInPX - (item.position.y + item.size.y) * coordinateSize };
+            const drawSize = { x: item.size.x * coordinateSize, y: item.size.y * coordinateSize };
             if(item.image !== undefined) {
                 // Use texture
-                this.context.drawImage(item.image, item.position.x * coordinateSize, canvasHeightInPX - (item.position.y + item.size.y) * coordinateSize, item.size.x * coordinateSize, item.size.y * coordinateSize);
+                if(item.isFacingRight) {
+                    // Mirror image
+                    this.context.save();
+                    this.context.scale(-1, 1);
+                    this.context.drawImage(item.image, drawPosition.x * -1, drawPosition.y, drawSize.x * -1, drawSize.y);
+                    this.context.restore();
+                } else {
+                    this.context.drawImage(item.image, drawPosition.x, drawPosition.y, drawSize.x, drawSize.y);
+                }
             } else {
                 // Draw color
                 this.context.fillStyle = item.color || 'green';
-                this.context.fillRect(item.position.x * coordinateSize, canvasHeightInPX - (item.position.y + item.size.y) * coordinateSize, item.size.x * coordinateSize, item.size.y * coordinateSize);
+                this.context.fillRect(drawPosition.x, drawPosition.y, drawSize.x, drawSize.y);
             }
 
             // Draw border

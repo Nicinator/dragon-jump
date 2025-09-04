@@ -1,7 +1,7 @@
 class ProgressBar {
     constructor(color, parentPosition) {
         this.parentPosition = parentPosition;
-        this.offset = { x: 0, y: 9 };
+        this.offset = { x: 1, y: 9 };
         this.position = { x: 0, y: 0 }; // Will be calculated during runtime
         this.size = { x: 0, y: 1 }; // X will be calculated during runtime
         this.fullSize = { x: 10, y: 1 };

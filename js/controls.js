@@ -1,8 +1,8 @@
 class Controls {
-    constructor(player) {
+    constructor() {
         this.isMovingLeft = false;
         this.isMovingRight = false;
-        this.player = player;
+        this.isPressingSpace = false;
 
         window.addEventListener('keydown', (event) => { this.handleKeyEvent(event) });
         window.addEventListener('keyup', (event) => { this.handleKeyEvent(event) });
@@ -22,12 +22,16 @@ class Controls {
                 this.isMovingRight = isKeyDown;
                 break;
             case 'Space':
-                player.isChargingJump = isKeyDown;
-
-                if(!isKeyDown) {
-                    this.player.jump();
-                }
+                this.isPressingSpace = isKeyDown;
                 break;
+        }
+    }
+
+    nextTick() {
+        player.isChargingJump = this.isPressingSpace && player.isStanding;
+
+        if(!this.isPressingSpace && player.isStanding) {
+            player.jump();
         }
     }
 }
