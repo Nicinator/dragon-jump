@@ -23,6 +23,15 @@ class Controls {
                 break;
             case 'Space':
                 this.isPressingSpace = isKeyDown;
+
+                if(isKeyDown && !player.isStanding) {
+                    player.isGliding = !player.isGliding;
+                }
+                break;
+            case 'ShiftLeft':
+                if(player.isStanding) {
+                    player.drop();
+                }
                 break;
         }
     }
@@ -30,7 +39,7 @@ class Controls {
     nextTick() {
         player.isChargingJump = this.isPressingSpace && player.isStanding;
 
-        if(!this.isPressingSpace && player.isStanding) {
+        if(player.jumpCharge && !this.isPressingSpace && player.isStanding) {
             player.jump();
         }
     }

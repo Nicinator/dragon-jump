@@ -2,7 +2,7 @@
 const ASPECT_RATIO = 16 / 9;
 const HIGHEST_Y = 100 / ASPECT_RATIO;
 const GRAVITY = 50; // 50% of with per second squared
-let worldMovementSpeed = 1;
+let worldMovementSpeed = 3;
 let coordinateSize;
 let canvasHeightInPX = 0;
 function handleResize() {

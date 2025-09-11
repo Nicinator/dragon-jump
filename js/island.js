@@ -7,11 +7,22 @@ class Island {
             this.position = { x: 0, y: 0 };
             this.size = { x: 0, y: 0 };
         }
+
+        this.collisionSize = { ...this.size }; // Will be overwritten when island is spawned
+        this.collisionPositionOffset = { x: 0, y: -2 };
+
+        this.image = document.getElementById('island');
+
+        this.slipperyness = 50;
     }
 
     spawn(minY) {
         // Random size between 10 and 20
         this.size.x = this.size.y = Math.random() * 5 + 10;
+
+        // Set collision properties
+        this.collisionSize = { ...this.size };
+        this.collisionPositionOffset.y *= this.size.x / 20;
 
         // Randomize position
         this.position.x = Math.random() * (100 - this.size.x);
@@ -19,14 +30,19 @@ class Island {
     }
 
     isCollidingWith(object) {
+        const collisionPosition = { x: this.position.x + this.collisionPositionOffset.x, y: this.position.y + this.collisionPositionOffset.y };
         if(
-            this.position.x < object.position.x + object.size.x && this.position.x + this.size.x > object.position.x &&
-            this.position.y < object.position.y + object.size.y && this.position.y + this.size.y > object.position.y
+            collisionPosition.x < object.position.x + object.size.x && collisionPosition.x + this.collisionSize.x > object.position.x &&
+            collisionPosition.y < object.position.y + object.size.y && collisionPosition.y + this.collisionSize.y > object.position.y
         ) {
             return true;
         }
 
         return false;
+    }
+
+    getCollisionY() {
+        return this.position.y + this.collisionPositionOffset.y + this.collisionSize.y;
     }
 
     nextTick(canvas) {
