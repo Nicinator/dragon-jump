@@ -8,6 +8,7 @@ class Character {
         this.collisionPositionOffset = { x: 4.5, y: 0 };
         this.textures = {
             standing: document.getElementById('characterStanding'),
+            sneaking: document.getElementById('characterSneaking'),
         };
         this.image = this.textures.standing;
         this.isFacingRight = true;
@@ -137,12 +138,11 @@ class Character {
     }
 
     selectTexture(canvas) {
-        // Potential texture replacement
-        /*if(this.isFacingRight) {
-            this.image = this.textures.standingRight;
+        if(this.isChargingJump) {
+            this.image = this.textures.sneaking;
         } else {
-            this.image = this.textures.standingLeft;
-        }*/
+            this.image = this.textures.standing;
+        }
 
         canvas.addContent(this);
     }
