@@ -2,7 +2,9 @@
 const ASPECT_RATIO = 16 / 9;
 const HIGHEST_Y = 100 / ASPECT_RATIO;
 const GRAVITY = 50; // 50% of with per second squared
-let worldMovementSpeed = 3;
+const WORLD_ACCELERATION = 0.04;
+const MAX_WORLD_MOVEMENT_SPEED = 10;
+let worldMovementSpeed = 2;
 let coordinateSize;
 let canvasHeightInPX = 0;
 function handleResize() {
@@ -37,6 +39,11 @@ function tick() {
     lastTimestamp = currentTimestamp;
 
     // World movement
+    if(worldMovementSpeed < MAX_WORLD_MOVEMENT_SPEED) {
+        worldMovementSpeed += WORLD_ACCELERATION * deltaTime / 1000;
+    } else if(worldMovementSpeed > MAX_WORLD_MOVEMENT_SPEED) {
+        worldMovementSpeed = MAX_WORLD_MOVEMENT_SPEED;
+    }
     const worldMovementOffset = worldMovementSpeed * deltaTime / 1000;
     world.worldMovement(worldMovementOffset);
     player.worldMovement(worldMovementOffset);

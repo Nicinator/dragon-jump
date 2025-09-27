@@ -9,6 +9,8 @@ class Character {
         this.textures = {
             standing: document.getElementById('characterStanding'),
             sneaking: document.getElementById('characterSneaking'),
+            flying1: document.getElementById('characterFlying1'),
+            flying2: document.getElementById('characterFlying2'),
         };
         this.image = this.textures.standing;
         this.isFacingRight = true;
@@ -140,6 +142,12 @@ class Character {
     selectTexture(canvas) {
         if(this.isChargingJump) {
             this.image = this.textures.sneaking;
+        } else if(this.isGliding) {
+            if(lastTimestamp % 1000 < 500) {
+                this.image = this.textures.flying1;
+            } else {
+                this.image = this.textures.flying2;
+            }
         } else {
             this.image = this.textures.standing;
         }
